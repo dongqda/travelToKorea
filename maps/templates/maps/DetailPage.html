@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <title>DetailPage</title>
+   <style>
+   #scrapBtn {
+       display : grid;
+   }
+   #scrapBtn p {
+       background-color: yellowgreen;
+       width: 10vw;
+       grid-column: 9/10;
+   }
+   .detailAll {
+       display: grid;
+       grid-template-columns: 50% 50%;
+   }
+   #detailImage {
+       background-color : palevioletred;
+       margin: 10px;
+       height: 70vw;
+       grid-column: 1/2;
+   }
+   #detailContents {
+       background-color: gray;
+       margin: 10px;
+       height: 70vw;
+       grid-column: 2/3;
+   }
+   #detailComments {
+       background-color: salmon;
+       margin: 10px;
+   }
+   </style>
+</head>
+<body>
+   <!-- scrap button -->
+   <div id="scrapBtn">
+       <p>버튼입니다. 이 글은 나중에 지워주세요!</p>
+   </div>
+   <div class="detailAll">
+       <!-- image -->
+       <div id="detailImage" class="">
+           <p>이미지 공간입니다. 이 글은 나중에 지워주세요!</p>
+       </div>
+       <!-- inform -->
+       <div id="detailContents" class="">
+           <p>정보 공간입니다. 나중에 지워주세요!</p>
+       </div>
+   </div>
+   <!-- 댓글 -->
+   <form action="" methods="POST" id="detailComments">
+       <p>여기는 댓글 작성란 입니다. 나중에 지워주세요</p>
+       <span>★★★★★</span>
+       <input type="text" name="comments" style="width:80vw; margin:10px;">
+       <input type="submit" value="submit">
+   </form>
+</body>
+</html>
