@@ -1,30 +1,27 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>MyPage</title>
-</head>
-<body>
-    <!-- {% load static %} -->
-    <!-- <link rel="stylesheet" type="text/css" href="{% static 'accounts/stylesheets/style.css' %}"> -->
-    <div class="container" style="display: grid; grid-template-columns: 600px 600px; grid-template-rows: 50px 600px 150px;">
-        <div class="label" style="padding: 10px;">
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/stylesheets/style.css' %}">
+{% endblock %}
+
+{% block body %}
+<span>　</span>
+    <div class="container">
+        <div class="label">
             내 발자취 지도!(라벨)
         </div>
-        <div class="label" style="padding: 10px;">
+        <div class="label">
             내 스크랩!(라벨)
         </div>
-        <div class="maps" style="border: 1px solid; padding: 10px; background-color: gray;">
+        <div class="maps">
             지도 영역
         </div>
-        <div class="scraps" style="border: 1px solid; padding: 10px; background-color: chocolate;">
+        <div class="scraps">
             스크랩 영역
         </div>
-        <div class="course" style="grid-column-start: 1; grid-column-end: 3; border: 1px solid; padding: 10px;">
+        <div class="course">
             내가 저장한 코스
         </div>
     </div>
-</body>
-</html>
+{% endblock %}
