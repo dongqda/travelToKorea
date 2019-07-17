@@ -1,0 +1,29 @@
+
+#scrapBtn {
+    display : grid;
+}
+#scrapBtn p {
+    background-color: yellowgreen;
+    width: 10vw;
+    grid-column: 9/10;
+}
+.detailAll {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+#detailImage {
+    background-color : palevioletred;
+    margin: 10px;
+    height: 70vw;
+    grid-column: 1/2;
+}
+#detailContents {
+    background-color: gray;
+    margin: 10px;
+    height: 70vw;
+    grid-column: 2/3;
+}
+#detailComments {
+    background-color: salmon;
+    margin: 10px;
+}
