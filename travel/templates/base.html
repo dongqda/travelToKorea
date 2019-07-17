@@ -7,14 +7,23 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>{% block title %}Travel to Korea - {% endblock %}</title>
 
     <link rel="stylesheet" type="text/css" href="{% static 'travel/css/base.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    {% block css %} {% endblock %}
+
 </head>
 <body>
+    
     {% include '_header.html' %}
+
+    <div class="container">
+        {% block body %}
+        {% endblock %}
+    </div>
+
     {% include '_footer.html' %}
-    {% block body %}
-    {% endblock %}
+    {% block script %}{% endblock %}
 </body>
 </html>
