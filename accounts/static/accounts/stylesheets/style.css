@@ -1,0 +1,25 @@
+.container {
+    display: grid;
+    grid-template-columns: 600px 600px;
+    grid-template-rows: 50px 600px 150px;
+}
+
+.label {
+    padding: 10px;
+}
+
+.maps {
+    border: 1px solid;
+    padding: 10px; 
+    background-color: gray;
+}
+
+.scraps {
+    border: 1px solid;
+    padding: 10px; 
+    background-color: chocolate;
+}
+
+.course {
+    grid-column-start: 1; grid-column-end: 3; border: 1px solid; padding: 10px;
+}
