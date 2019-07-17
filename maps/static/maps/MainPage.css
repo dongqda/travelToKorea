@@ -1,0 +1,32 @@
+.main {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.mainMap {
+    grid-column: 1/2;
+}
+
+.checkbox {
+    border: 4px dashed #bcbcbc;
+    height: 100px;
+    /* width: 500px; */
+}
+
+.sigungu {
+    border: 4px dashed #bcbcbc;
+    height: 50px;
+    /* width: 500px; */
+}
+
+.koreamap > img {
+    height: 350px;
+    width: 500px;
+}
+
+.options {
+    background-color : yellowgreen;
+    height: 500px;
+    /* width: 450px; */
+    grid-column: 2/3;
+}
