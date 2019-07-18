@@ -1,0 +1,18 @@
+/*테이블 실선 시작*/
+table
+{
+border:1px solid black;
+border-collapse:collapse;
+}
+td, th
+{
+border:1px solid black;
+}
+/*테이블 실선 끝*/
+
+/*div 중앙정렬 시작*/
+.layer{
+
+}
+
+/*div 중앙정렬 끝*/

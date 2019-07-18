@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block css %}<link rel="stylesheet" type="text/css" href="{% static 'maps/MainPage.css' %}"> {% endblock %}
+
+<!-- body -->
+{% block body %}
+    <strong>메인페이지입니다</strong>
+    <div class="main">
+        <div class="mainmap">
+            <!-- 체크박스 -->
+            <div class="checkbox">
+                <input type="checkbox" name="chk_info" value="all">전체
+                <input type="checkbox" name="chk_info" value="12">관광지
+                <input type="checkbox" name="chk_info" value="14">문화시설
+                <input type="checkbox" name="chk_info" value="15">축제/공연
+                <input type="checkbox" name="chk_info" value="32">숙박
+                <input type="checkbox" name="chk_info" value="28">레포츠
+                <input type="checkbox" name="chk_info" value="38">쇼핑
+                <input type="checkbox" name="chk_info" value="39">음식점
+            </div>
+
+            <!-- 지역선택 부분 -->
+            <div class="sigungu">지역선택 - 시 / 군 / 구 선택하는 dropdown을 넣어주세요
+                <select>
+                  <option value="volvo">지역선택</option>
+                  <option value="volvo">전체</option>
+                </select>
+                <select>
+                  <option value="volvo">시군구 선택</option>
+                </select>
+
+            </div>
+            
+            <!-- 메인지도가 들어갈 부분 -->
+            <div class="koreamap">
+                <img src="http://www.orangesmile.com/common/img_country_maps/south-korea-map-2.jpg" alt="koreamap">
+            </div>
+        </div>
+
+        <!-- 옵션 정보 부분 -->
+        <div class="options">명소 / 숙박 / 맛집 등 옵션 및 리스트를 넣어주세요</div>
+    </div>
+
+{% endblock %}
