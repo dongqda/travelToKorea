@@ -28,8 +28,8 @@ def main(request):
 
     return render(request, 'maps/MainPage.html', context)
 
-def base(request):
-    return render(request, 'base.html')
+def korea(request):
+    return render(request, 'maps/korea.html')
 
 # detail page
 def detailpage(request):
