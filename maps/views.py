@@ -34,7 +34,3 @@ def base(request):
 # detail page
 def detailpage(request):
     return render(request, 'maps/DetailPage.html')
-
-def changeregion(request):
-
-    return render(request, 'maps/MainPage.html')
