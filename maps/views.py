@@ -5,8 +5,8 @@ from django.shortcuts import render
 def main(request):
     return render(request, 'maps/MainPage.html')
 
-def base(request):
-    return render(request, 'base.html')
+def korea(request):
+    return render(request, 'maps/korea.html')
 
 # detail page
 def detailpage(request):
