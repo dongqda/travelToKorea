@@ -5,7 +5,7 @@
 
 <!-- body -->
 {% block body %}
-<div class="layer">
+<div class="layer" id="app">
     <table >
         <colgroup>
             <col width="50%">
@@ -24,20 +24,23 @@
                     <input type="checkbox" name="chk_info" value="39">음식점
                 </div>
             </td>
-            <td rowspan="3">s
+            <td rowspan="3">
                 여기에 관광지 정보 리스트가 뜹니다. 찡긋^^
             </td>
         </tr>
         <tr>
              <td>
-              <select id="region">
+              <select id="region" name="region" onchange="changeRegion()">
                   <option value="all">전체보기</option>
                     {% for i in value %}
                         <option value="{{i.code}}">{{i.name}}</option>
                     {%endfor%}
                 </select>
-                <select id="sigungu">
-                  <option value="volvo">시군구 선택</option>
+                <select id="sigungu" >
+                    <option value="" selected disabled hidden>시군구 선택</option>
+                     {% for i in sigungu %}
+                        <option value="{{i.code}}">{{i.name}}</option>
+                    {%endfor%}
                 </select>
              </td>
         </tr>
@@ -46,4 +49,22 @@
         </tr>
     </table>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+
+
+function changeRegion(){
+    var Select = document.getElementById("region");
+    alert(Select.value)
+    let base_URL = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaCode?ServiceKey=tG2pbhauvACu6IO20lRl4NIY5qDcRrFnl21s57G6XgwovyquyiFquhZgoE%2FBmG930wyBEyxx4pNZEyxzt8%2Brvg%3D%3D&areaCode="+Select.value+"&numOfRows=25&pageNo=1&MobileOS=AND&MobileApp=travel5&_type=json"
+    axios.get(base_URL)
+        .then(function(response){
+              console.log(response); // 객체 형태로 반환. 파싱작업 불필요
+              console.log(response['data']['response']['body']['items']['item'])
+        });
+}
+</script>
+
 {% endblock %}

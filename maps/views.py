@@ -22,7 +22,7 @@ def main(request):
         dict = json.loads(response_body.decode('utf-8'))
         pprint(dict)
         value = dict['response']['body']['items']['item']
-        context = {'value': value}
+        context = {'value': value }
     else:
         print("Error Code:" + rescode)
 
@@ -34,3 +34,7 @@ def base(request):
 # detail page
 def detailpage(request):
     return render(request, 'maps/DetailPage.html')
+
+def changeregion(request):
+
+    return render(request, 'maps/MainPage.html')
