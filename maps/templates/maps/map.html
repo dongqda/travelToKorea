@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block css %}<link rel="stylesheet" type="text/css" href="{% static 'maps/stylesheets/map.css' %}"> {% endblock %}
+
+{% block body %}
+s
+
+<img src="{% static 'maps/img/festival.png' %}" style="width: 40px; height: 40px;" class="fes_img">
+
+<div id="regions_div" style="width: 900px; height: 500px;"></div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+  google.charts.load('current', {
+    'packages':['geochart'],
+    // Note: you will need to get a mapsApiKey for your project.
+    // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
+    'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'
+  });
+  google.charts.setOnLoadCallback(drawRegionsMap);
+
+  const fes_img = document.getElementsByClassName('fes_img')
+  console.log(fes_img)
+
+  function drawRegionsMap() {
+    var data = google.visualization.arrayToDataTable([
+      ['Provinces', 'festival', 'hotel'],
+      ['Seoul', 0, 0],
+      ['Busan', 5, 500],
+      ['Daejeon', 3, 350],
+      ['Incheon', 2, 300],
+      ['Chungbuk', 7, 200],
+    ]);
+
+    var options = {
+        region: 'KR',
+        resolution: 'provinces',
+        // keepAspectRatio: false,
+    };
+
+    var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+
+    chart.draw(data, options);
+
+    var click = google.visualization.events.addListener(chart, 'select', function() {
+        var selectedItem = chart.getSelection()[0];
+
+        if (selectedItem) {
+            var area = data.getValue(selectedItem.row, 0);
+            alert(area);
+        }
+    })
+  }
+</script>
+
+{% endblock %}
+
+<!-- 
+
+<div id="map"></div>
+<script>
+var map;
+    var KOREA_BOUNDS = {
+    north: 38.9,
+    south: 33.0,
+    west: 124.5,
+    east: 132.0,
+    };
+    var koreaCenter = {lat: 35.95, lng: 128.25};
+
+    var myStyle = [
+        {
+            featureType: "all",
+            elementType: "labels",
+            stylers: [
+                { visibility: "off" }
+            ]
+        }, 
+    ]
+
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+            mapTypeControlOptions: {
+                mapTypeIds: ['mystyle', google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.TERRAIN]
+            },
+            center: koreaCenter,
+            restriction: {
+                latLngBounds: KOREA_BOUNDS,
+                strictBounds: false,
+            },
+            zoom: 7,
+            mapTypeId: 'mystyle'
+        });
+
+        map.mapTypes.set('mystyle', new google.maps.StyledMapType(myStyle, { name: 'My Style' }));        
+    }
+    </script>
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJVRG59turcLFJTx458r87dDWlE274Idk&callback=initMap&sensor=false"
+    type="text/javascript"></script>
+
+ -->

@@ -1,29 +1,106 @@
 {% extends 'base.html' %}
 
 {% load static %}
-{% block css %}<link rel="stylesheet" type="text/css" href="{% static 'maps/MainPage.css' %}"> {% endblock %}
+{% block css %}<link rel="stylesheet" type="text/css" href="{% static 'maps/stylesheets/MainPage.css' %}"> {% endblock %}
 
 <!-- body -->
 {% block body %}
-    <strong>메인페이지입니다</strong>
-    <div class="main">
-        <div class="mainmap">
-            <!-- 체크박스 -->
-            <div class="checkbox">
-                체크박스 - 항목들을 채워주세요
-            </div>
-            
-            <!-- 지역선택 부분 -->
-            <div class="sigungu">지역선택 - 시 / 군 / 구 선택하는 dropdown을 넣어주세요</div>
-            
-            <!-- 메인지도가 들어갈 부분 -->
-            <div class="koreamap">
-                <img src="http://www.orangesmile.com/common/img_country_maps/south-korea-map-2.jpg" alt="koreamap">
-            </div>
-        </div>
+<div class="layer" id="app">
+    <table >
+        <colgroup>
+            <col width="50%">
+            <col width="50%">
+        </colgroup>
+        <tr>
+            <td>
+                <div class="checkbox">
+                    <input type="checkbox" name="chk_info" value="all" id="chkAll" onclick="checkAll(this)">전체
+                    <input type="checkbox" name="chk_info" value="12" onclick="check(this)">관광지
+                    <input type="checkbox" name="chk_info" value="14" onclick="check(this)">문화시설
+                    <input type="checkbox" name="chk_info" value="15" onclick="check(this)">축제/공연
+                    <input type="checkbox" name="chk_info" value="28" onclick="check(this)">레포츠
+                    <input type="checkbox" name="chk_info" value="32" onclick="check(this)">숙박
+                    <input type="checkbox" name="chk_info" value="38" onclick="check(this)">쇼핑
+                    <input type="checkbox" name="chk_info" value="39" onclick="check(this)">음식점
+                </div>
+            </td>
+            <td rowspan="3">
+                여기에 관광지 정보 리스트가 뜹니다. 찡긋^^
+            </td>
+        </tr>
+        <tr>
+             <td>
+              <select id="region" name="region" v-on:change="changeRegion()">
+                  <option value="all">전체보기</option>
+                  [[selectedlist]]
+                    {% for i in value %}
+                        <option value="{{i.code}}">{{i.name}}</option>
+                    {%endfor%}
+                </select>
+                <select id="sigungu" >
+                    <option  value="" selected disabled hidden>시군구 선택</option>
+                    <option v-for="list in selectedlist" id = "listsigungu" value="">[[list]]</option>
+                </select>
+             </td>
+        </tr>
+        <tr>
+            <td>지도</td>
+        </tr>
+    </table>
+</div>
 
-        <!-- 옵션 정보 부분 -->
-        <div class="options">명소 / 숙박 / 맛집 등 옵션 및 리스트를 넣어주세요</div>
-    </div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+
+var app = new Vue({
+    el: '#app',
+    delimiters: ['[[', ']]'],
+    data: {
+            selectedlist:[]
+    },
+    methods:{
+        changeRegion : function(region){
+            var Select = document.getElementById("region");
+            let base_URL = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaCode?ServiceKey=tG2pbhauvACu6IO20lRl4NIY5qDcRrFnl21s57G6XgwovyquyiFquhZgoE%2FBmG930wyBEyxx4pNZEyxzt8%2Brvg%3D%3D&areaCode="+Select.value+"&numOfRows=25&pageNo=1&MobileOS=AND&MobileApp=travel5&_type=json"
+
+            axios.get(base_URL)
+                .then(response => {
+                    console.log(response.data.response.body.items.item)
+                    item = response.data.response.body.items.item
+                    item.forEach((sigungu) => {
+                        this.selectedlist.push(sigungu.name)
+                    })
+                });
+            this.selectedlist=[]
+        }
+    },
+});
+
+    <!--전체선택-->
+      function checkAll(box){
+          if( $("#chkAll").is(':checked') ){
+            $("input[name=chk_info]").prop("checked", true);
+          }else{
+            $("input[name=chk_info]").prop("checked", false);
+          }
+       }
+
+
+    <!--체크시 값 출력-->
+    function check(box){
+        if (box.checked==true){
+            if($("#chkAll").is(':checked')){
+                $("input[name=checkRow]").prop("checked", true);
+                alert(box.value)
+            }else{
+                alert(box.value)
+            }
+        }
+     }
+
+
+
+</script>
 
 {% endblock %}
