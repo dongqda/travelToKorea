@@ -33,8 +33,10 @@ urlpatterns = [
     url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     
     path('', views.main, name='main'),
+    path('map/', views.map, name="map"),
     path('korea/', views.korea, name='korea'),
     path('detail/<int:content_id>/', views.detailpage),
     # path('docs/', get_swagger_view(title="여행 정보 API")),
     path('detail/', views.test),
-]
+
+    ]
