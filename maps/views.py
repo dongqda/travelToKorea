@@ -23,12 +23,14 @@ def main(request):
         pprint(dict)
         value = dict['response']['body']['items']['item']
         context = {'value': value }
+        return render(request, 'maps/MainPage.html', context)
     else:
         print("Error Code:" + rescode)
+        return render(request, 'maps/MainPage.html')
 
-    return render(request, 'maps/MainPage.html', context)
 
-def korea(request):
+
+ def korea(request):
     return render(request, 'maps/korea.html')
 
 def getInform(items, key_lists, lists):
@@ -141,6 +143,5 @@ def detailpage(request, content_id):
     context = {'imageList':image_list, 'inform':inform, 'title':title}
     return render(request, 'maps/DetailPage.html', context)
 
-def changeregion(request):
-
-    return render(request, 'maps/MainPage.html')
+def map(request):
+    return render(request, 'maps/map.html')
