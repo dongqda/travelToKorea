@@ -4,24 +4,39 @@
 
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'maps/stylesheets/DetailPage.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900%7CMaterial+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="{% static 'maps/stylesheets/DetailPage.css' %}"> -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
 디테일 페이지
-    <div class="container">
+    <div id="app" class="container">
         <!-- scrap button -->
-        <div id="scrapBtn">
-            <p>버튼입니다. 이 글은 나중에 지워주세요!</p>
+        <div id="scrapBtn" v-if="isScrap">
+            <p><i v-on:click="saveScrap" class="material-icons" style="color:red">star</i></p>
         </div>
-        <div class="detailAll">
+        <div id="scrapBtn" v-else>
+            <p><i v-on:click="saveScrap" class="material-icons" style="color:white">star</i></p>
+        </div>
+        <div class="text-center"><h2>{{ title }}</h2></div>
+        <div class="detailAll mt-3">
             <!-- image -->
             <div id="detailImage" class="">
-                <p>이미지 공간입니다. 이 글은 나중에 지워주세요!</p>
+                <v-carousel>
+                    <v-carousel-item
+                      v-for="(item,i) in {{imageList}}"
+                      :key="i"
+                      :src="item"
+                    ></v-carousel-item>
+                  </v-carousel>
             </div>
             <!-- inform -->
-            <div id="detailContents" class="">
-                <p>정보 공간입니다. 나중에 지워주세요!</p>
+            <div id="detailContents" class="mt-3">
+                {% for key, inf in inform.items %}
+                    <p>{{ key }} : {{ inf }}</p>
+                {% endfor %}
             </div>
         </div>
         <!-- 댓글 -->
@@ -32,5 +47,31 @@
             <input type="submit" value="submit">
         </form>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+
+    <script>
+        const app = new Vue ({
+            el: '#app',
+            delimiters: ['[[', ']]'],
+            data: {
+                // image: {{imageList}}
+                isScrap: false,
+            },
+            methods: {
+                saveScrap = function() {
+                    // const starColor = document.getElementById('scrapBtn')
+                    // alert(starColor)
+                    // console.log(starColor)
+                    if (this.isScrap) {
+                        this.isScrap != this.isScrap
+                        // starColor = <p><i v-on:click="saveScrap" class="material-icons" style="color:red">star</i></p>
+
+                    }
+            }
+            }
+        })
+    </script>
 {% endblock %}
     

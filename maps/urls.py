@@ -8,6 +8,6 @@ urlpatterns = [
     path('map/', views.map, name="map"),
     path('', views.main, name='main'),
     path('korea/', views.korea, name='korea'),
-    path('detail/', views.detailpage),
+    path('detail/<int:content_id>/', views.detailpage),
 
     ]
