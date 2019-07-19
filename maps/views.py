@@ -28,9 +28,7 @@ def main(request):
         print("Error Code:" + rescode)
         return render(request, 'maps/MainPage.html')
 
-
-
- def korea(request):
+def korea(request):
     return render(request, 'maps/korea.html')
 
 # detail page
