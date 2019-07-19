@@ -6,5 +6,5 @@ app_name = 'maps'
 urlpatterns = [
     path('', views.main, name='main'),
     path('korea/', views.korea, name='korea'),
-    path('detail/', views.detailpage),
+    path('detail/<int:content_id>/', views.detailpage),
     ]
