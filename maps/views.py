@@ -23,10 +23,12 @@ def main(request):
         pprint(dict)
         value = dict['response']['body']['items']['item']
         context = {'value': value }
+        return render(request, 'maps/MainPage.html', context)
     else:
         print("Error Code:" + rescode)
+        return render(request, 'maps/MainPage.html')
 
-  return render(request, 'maps/MainPage.html', context)
+
 
  def korea(request):
     return render(request, 'maps/korea.html')
@@ -35,8 +37,5 @@ def main(request):
 def detailpage(request):
     return render(request, 'maps/DetailPage.html')
 
-
 def map(request):
     return render(request, 'maps/map.html')
-
-
