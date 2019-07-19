@@ -14,18 +14,18 @@
         <tr>
             <td>
                 <div class="checkbox">
-                    <input type="checkbox" name="chk_info" value="all" id="chkAll" onclick="checkAll(this)">전체
-                    <input type="checkbox" name="chk_info" value="12" onclick="check(this)">관광지
-                    <input type="checkbox" name="chk_info" value="14" onclick="check(this)">문화시설
-                    <input type="checkbox" name="chk_info" value="15" onclick="check(this)">축제/공연
-                    <input type="checkbox" name="chk_info" value="28" onclick="check(this)">레포츠
-                    <input type="checkbox" name="chk_info" value="32" onclick="check(this)">숙박
-                    <input type="checkbox" name="chk_info" value="38" onclick="check(this)">쇼핑
-                    <input type="checkbox" name="chk_info" value="39" onclick="check(this)">음식점
+                    <input type="checkbox" name="all" value="chk_info" id="chkAll" onclick="checkAll(all)">전체
+                    <input type="checkbox" name="12" value="chk_info" v-on:click="check(12)">관광지
+                    <input type="checkbox" name="14" value="chk_info" v-on:click="check(14)">문화시설
+                    <input type="checkbox" name="15" value="chk_info" v-on:click="check(15)">축제/공연
+                    <input type="checkbox" name="28" value="chk_info" v-on:click="check(28)">레포츠
+                    <input type="checkbox" name="32" value="chk_info" v-on:click="check(32)">숙박
+                    <input type="checkbox" name="38" value="chk_info" v-on:click="check(38)">쇼핑
+                    <input type="checkbox" name="39" value="chk_info" v-on:click="check(39)">음식점
                 </div>
             </td>
             <td rowspan="3">
-                여기에 관광지 정보 리스트가 뜹니다. 찡긋^^
+                <p v-for="list in travelList">[[list]]</p>
             </td>
         </tr>
         <tr>
@@ -37,14 +37,16 @@
                         <option value="{{i.code}}">{{i.name}}</option>
                     {%endfor%}
                 </select>
-                <select id="sigungu" >
-                    <option  value="" selected disabled hidden>시군구 선택</option>
-                    <option v-for="list in selectedlist" id = "listsigungu" value="">[[list]]</option>
+                <select id="sigungu" v-on:change="changeSigungu()">
+                    <option  selected disabled hidden>시군구 선택</option>
+                    <option v-for="list in selectedlist" id = "listsigungu" :value="list.code">[[list.name]]</option>
                 </select>
              </td>
         </tr>
         <tr>
-            <td>지도</td>
+            <td>
+                <img src="{% static 'maps/img/earth.gif' %}">
+            </td>
         </tr>
     </table>
 </div>
@@ -57,11 +59,17 @@ var app = new Vue({
     el: '#app',
     delimiters: ['[[', ']]'],
     data: {
-            selectedlist:[]
+            selectedlist:[],
+            travelList:[],
+            checked:false,
+            areacode:'',
+            sigungucode:'',
     },
     methods:{
-        changeRegion : function(region){
+        <!--대분류 선택시-->
+        changeRegion : function(){
             var Select = document.getElementById("region");
+            this.areacode=Select.value;
             let base_URL = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaCode?ServiceKey=tG2pbhauvACu6IO20lRl4NIY5qDcRrFnl21s57G6XgwovyquyiFquhZgoE%2FBmG930wyBEyxx4pNZEyxzt8%2Brvg%3D%3D&areaCode="+Select.value+"&numOfRows=25&pageNo=1&MobileOS=AND&MobileApp=travel5&_type=json"
 
             axios.get(base_URL)
@@ -69,14 +77,41 @@ var app = new Vue({
                     console.log(response.data.response.body.items.item)
                     item = response.data.response.body.items.item
                     item.forEach((sigungu) => {
-                        this.selectedlist.push(sigungu.name)
+                        this.selectedlist.push(sigungu)
                     })
                 });
             this.selectedlist=[]
-        }
+        },
+
+        <!--시군구 선택시-->
+        changeSigungu : function(){
+            var Select = document.getElementById("sigungu");
+            alert(Select.value)
+            this.sigungucode=Select.value
+        },
+        <!--체크시 값 출력-->
+         check :function(value){
+            if(this.checked==false){this.checked=true}
+            if (this.checked==true){
+                 let base_URL = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=tG2pbhauvACu6IO20lRl4NIY5qDcRrFnl21s57G6XgwovyquyiFquhZgoE%2FBmG930wyBEyxx4pNZEyxzt8%2Brvg%3D%3D&contentTypeId="+value+"&areaCode="+this.areacode+"&sigunguCode="+this.sigungucode+"&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=10&pageNo=1&_type=json"
+                 axios.get(base_URL)
+                 .then(response => {
+                     console.log(response)
+                     item = response.data.response.body.items.item
+
+                     item.forEach((travel) => {
+                         this.travelList.push(travel.title)
+                     });
+                     console.log(this.travelList)
+                 });
+            }
+            else{
+                this.travelList=[]
+            }
+         }
     },
 });
-
+Vue.config.devtools = true;
     <!--전체선택-->
       function checkAll(box){
           if( $("#chkAll").is(':checked') ){
@@ -85,21 +120,6 @@ var app = new Vue({
             $("input[name=chk_info]").prop("checked", false);
           }
        }
-
-
-    <!--체크시 값 출력-->
-    function check(box){
-        if (box.checked==true){
-            if($("#chkAll").is(':checked')){
-                $("input[name=checkRow]").prop("checked", true);
-                alert(box.value)
-            }else{
-                alert(box.value)
-            }
-        }
-     }
-
-
 
 </script>
 
