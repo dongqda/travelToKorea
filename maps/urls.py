@@ -37,4 +37,4 @@ urlpatterns = [
     path('detail/<int:content_id>/', views.detailpage),
     # path('docs/', get_swagger_view(title="여행 정보 API")),
     path('detail/', views.test),
-    ]
+]

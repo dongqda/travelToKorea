@@ -34,13 +34,12 @@ def main(request):
     if (rescode == 200):
         response_body = response.read()
         dict = json.loads(response_body.decode('utf-8'))
-        pprint(dict)
         value = dict['response']['body']['items']['item']
         context = {'value': value }
+        return render(request, 'maps/MainPage.html', context)
     else:
         print("Error Code:" + rescode)
-
-    return render(request, 'maps/MainPage.html', context)
+        return render(request, 'maps/MainPage.html')
 
 def korea(request):
     return render(request, 'maps/korea.html')
@@ -172,6 +171,5 @@ def detailpage(request, content_id):
     context = {'imageList':image_list, 'inform':inform, 'title':title, 'infotext':infotext}
     return render(request, 'maps/DetailPage.html', context)
 
-def changeregion(request):
-
-    return render(request, 'maps/MainPage.html')
+def map(request):
+    return render(request, 'maps/map.html')
