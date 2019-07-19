@@ -26,15 +26,17 @@ def main(request):
     else:
         print("Error Code:" + rescode)
 
-    return render(request, 'maps/MainPage.html', context)
+  return render(request, 'maps/MainPage.html', context)
 
-def korea(request):
+ def korea(request):
     return render(request, 'maps/korea.html')
 
 # detail page
 def detailpage(request):
     return render(request, 'maps/DetailPage.html')
 
-def changeregion(request):
 
-    return render(request, 'maps/MainPage.html')
+def map(request):
+    return render(request, 'maps/map.html')
+
+
