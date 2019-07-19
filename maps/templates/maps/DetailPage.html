@@ -6,7 +6,7 @@
 {% block css %}
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900%7CMaterial+Icons" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
-    <!-- <link rel="stylesheet" href="{% static 'maps/stylesheets/DetailPage.css' %}"> -->
+    <link rel="stylesheet" href="{% static 'maps/stylesheets/DetailPage.css' %}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 {% endblock %}
 
@@ -20,7 +20,9 @@
         <div id="scrapBtn" v-else>
             <p><i v-on:click="saveScrap" class="material-icons" style="color:white">star</i></p>
         </div>
+
         <div class="text-center"><h2>{{ title }}</h2></div>
+
         <div class="detailAll mt-3">
             <!-- image -->
             <div id="detailImage" class="">
@@ -35,8 +37,9 @@
             <!-- inform -->
             <div id="detailContents" class="mt-3">
                 {% for key, inf in inform.items %}
-                    <p>{{ key }} : {{ inf }}</p>
+                <p>{{ key }} : {{ inf }}</p>
                 {% endfor %}
+                <p>행사소개 : {{infotext}}</p>
             </div>
         </div>
         <!-- 댓글 -->
@@ -60,7 +63,7 @@
                 isScrap: false,
             },
             methods: {
-                saveScrap = function() {
+                saveScrap() {
                     // const starColor = document.getElementById('scrapBtn')
                     // alert(starColor)
                     // console.log(starColor)

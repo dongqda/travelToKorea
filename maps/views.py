@@ -1,9 +1,23 @@
 from django.shortcuts import render
+from django.conf.urls import url
 import urllib.request
 import json
 import pprint
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from .serializers import DetailInformSerializer
+from .models import DetailInform
+
 
 # Create your views here.
+
+@api_view(['GET'])
+def test(request):
+    '''여행 정보'''
+    inform = DetailInform.objects.all()
+    serializer = DetailInformSerializer(inform,  many=True)
+    return Response(serializer.data)
+
 
 def main(request):
     ServiceKey = "tG2pbhauvACu6IO20lRl4NIY5qDcRrFnl21s57G6XgwovyquyiFquhZgoE%2FBmG930wyBEyxx4pNZEyxzt8%2Brvg%3D%3D"
@@ -71,16 +85,27 @@ def detailpage(request, content_id):
     f = temp_url.read()
     content = json.loads(f.decode('utf-8'))
     # pprint.pprint(content)
-    items = content['response']['body']['items']['item']
+    image_items = content['response']['body']['items']['item']
     image_list = []
-    for i in items :
+    for i in image_items :
         image_list.append(i['originimgurl'])
     print(image_list)
 
-    # 소개 정보 가져오기
-    detailinfo_url = f"http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailIntro?ServiceKey={servicekey}&contentId={content_id}&contentTypeId={content_type_id}&MobileOS=ETC&MobileApp=AppTest&_type=json"
-    # print(detailinfo_url)
+    # 숙박/여행/그 이외 정보 추가
+    detailinfo_url = f"http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailInfo?ServiceKey={servicekey}&contentId={content_id}&contentTypeId={content_type_id}&MobileOS=ETC&MobileApp=AppTest&_type=json"
     temp_url = urllib.request.urlopen(detailinfo_url)
+    f = temp_url.read()
+    content = json.loads(f.decode('utf-8'))
+    pprint.pprint(content)
+    detail_items = content['response']['body']['items']['item']
+    pprint.pprint(detail_items[0]['infotext'])
+    infotext = detail_items[0]['infotext']
+    print('---------------------------------')
+
+    # 소개 정보 가져오기
+    detailintro_url = f"http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailIntro?ServiceKey={servicekey}&contentId={content_id}&contentTypeId={content_type_id}&MobileOS=ETC&MobileApp=AppTest&_type=json"
+    # print(detailinfo_url)
+    temp_url = urllib.request.urlopen(detailintro_url)
     f = temp_url.read()
     content = json.loads(f.decode('utf-8'))
     pprint.pprint(content)
@@ -137,7 +162,13 @@ def detailpage(request, content_id):
         inform = getInform(items, key_lists, lists)
     print(inform)
         
-    context = {'imageList':image_list, 'inform':inform, 'title':title}
+    detail = DetailInform()
+    detail.title = title
+    detail.image_lists = image_list
+    detail.content = infotext
+    detail.save()
+    
+    context = {'imageList':image_list, 'inform':inform, 'title':title, 'infotext':infotext}
     return render(request, 'maps/DetailPage.html', context)
 
 def map(request):
