@@ -20,7 +20,6 @@ def main(request):
     if (rescode == 200):
         response_body = response.read()
         dict = json.loads(response_body.decode('utf-8'))
-        pprint(dict)
         value = dict['response']['body']['items']['item']
         context = {'value': value }
         return render(request, 'maps/MainPage.html', context)

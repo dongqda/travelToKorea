@@ -14,14 +14,14 @@
         <tr>
             <td>
                 <div class="checkbox">
-                    <input type="checkbox" name="chk_info" value="all">전체
-                    <input type="checkbox" name="chk_info" value="12">관광지
-                    <input type="checkbox" name="chk_info" value="14">문화시설
-                    <input type="checkbox" name="chk_info" value="15">축제/공연
-                    <input type="checkbox" name="chk_info" value="32">숙박
-                    <input type="checkbox" name="chk_info" value="28">레포츠
-                    <input type="checkbox" name="chk_info" value="38">쇼핑
-                    <input type="checkbox" name="chk_info" value="39">음식점
+                    <input type="checkbox" name="chk_info" value="all" id="chkAll" onclick="checkAll(this)">전체
+                    <input type="checkbox" name="chk_info" value="12" onclick="check(this)">관광지
+                    <input type="checkbox" name="chk_info" value="14" onclick="check(this)">문화시설
+                    <input type="checkbox" name="chk_info" value="15" onclick="check(this)">축제/공연
+                    <input type="checkbox" name="chk_info" value="28" onclick="check(this)">레포츠
+                    <input type="checkbox" name="chk_info" value="32" onclick="check(this)">숙박
+                    <input type="checkbox" name="chk_info" value="38" onclick="check(this)">쇼핑
+                    <input type="checkbox" name="chk_info" value="39" onclick="check(this)">음식점
                 </div>
             </td>
             <td rowspan="3">
@@ -63,6 +63,7 @@ var app = new Vue({
         changeRegion : function(region){
             var Select = document.getElementById("region");
             let base_URL = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaCode?ServiceKey=tG2pbhauvACu6IO20lRl4NIY5qDcRrFnl21s57G6XgwovyquyiFquhZgoE%2FBmG930wyBEyxx4pNZEyxzt8%2Brvg%3D%3D&areaCode="+Select.value+"&numOfRows=25&pageNo=1&MobileOS=AND&MobileApp=travel5&_type=json"
+
             axios.get(base_URL)
                 .then(response => {
                     console.log(response.data.response.body.items.item)
@@ -75,6 +76,31 @@ var app = new Vue({
         }
     },
 });
+
+    <!--전체선택-->
+      function checkAll(box){
+          if( $("#chkAll").is(':checked') ){
+            $("input[name=chk_info]").prop("checked", true);
+          }else{
+            $("input[name=chk_info]").prop("checked", false);
+          }
+       }
+
+
+    <!--체크시 값 출력-->
+    function check(box){
+        if (box.checked==true){
+            if($("#chkAll").is(':checked')){
+                $("input[name=checkRow]").prop("checked", true);
+                alert(box.value)
+            }else{
+                alert(box.value)
+            }
+        }
+     }
+
+
+
 </script>
 
 {% endblock %}
