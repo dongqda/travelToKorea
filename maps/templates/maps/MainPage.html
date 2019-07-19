@@ -39,7 +39,7 @@
                 </select>
                 <select id="sigungu" >
                     <option  value="" selected disabled hidden>시군구 선택</option>
-                    <option v-for="list in selectedlist" id = "listsigungu" value="">[[list.name]]</option>
+                    <option v-for="list in selectedlist" id = "listsigungu" value="">[[list]]</option>
                 </select>
              </td>
         </tr>
@@ -57,19 +57,21 @@ var app = new Vue({
     el: '#app',
     delimiters: ['[[', ']]'],
     data: {
-        selectedlist:[]
+            selectedlist:[]
     },
     methods:{
         changeRegion : function(region){
             var Select = document.getElementById("region");
             let base_URL = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaCode?ServiceKey=tG2pbhauvACu6IO20lRl4NIY5qDcRrFnl21s57G6XgwovyquyiFquhZgoE%2FBmG930wyBEyxx4pNZEyxzt8%2Brvg%3D%3D&areaCode="+Select.value+"&numOfRows=25&pageNo=1&MobileOS=AND&MobileApp=travel5&_type=json"
-        axios.get(base_URL)
-            .then(response => {
-            console.log(response.data.response.body.items.item)
-<!--                 console.log(response['data']['response']['body']['items']['item'])-->
-                 this.selectedlist.push({region: response.data.response.body.items.item})
-            });
-            console.log(this.selectedlist)
+            axios.get(base_URL)
+                .then(response => {
+                    console.log(response.data.response.body.items.item)
+                    item = response.data.response.body.items.item
+                    item.forEach((sigungu) => {
+                        this.selectedlist.push(sigungu.name)
+                    })
+                });
+            this.selectedlist=[]
         }
     },
 });
